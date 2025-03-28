@@ -27,7 +27,8 @@ async function deployElectionFactoryFixture() {
   const resultCalculator = await ResultCalculator.deploy()
   const election = await Election.deploy()
   const electionFactory = await ElectionFactory.deploy(
-    '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9' // changed the ccip router address to imitate the owner as the router and externally call ccip functions
+    //changed the router address again
+    '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1' // changed the ccip router address to imitate the owner as the router and externally call ccip functions
   )
   const mockRouter = await MockCCIPReceiverRouter.deploy(electionFactory.target)
 

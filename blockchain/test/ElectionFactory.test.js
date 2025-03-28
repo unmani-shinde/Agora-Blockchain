@@ -15,6 +15,20 @@ describe("ElectionFactory", function () {
     options: ["Option 1", "Option 2", "Option 3"]
   };
 
+  //fixed test data structure
+  const mock_election_info = {
+    startTime: Math.floor(Date.now() / 1000) + 3600,
+    endTime: Math.floor(Date.now() / 1000) + 7200,
+    name: 'test election',
+    description: 'test description'
+  }
+
+  //fixed candidate data structure
+  const mock_candidate_info=[
+    {candidateID:0,name: 'Candidate 1',description: 'Description of first candidate'},
+    {candidateID:1,name:'Candidate 2',description: 'Description of second candidate'},
+    {candidateID:2,name: 'Candidate 3',description:'Description of third candidate'}]
+
   beforeEach(async function () {
     [owner, user1, user2, router] = await ethers.getSigners();
 
@@ -35,7 +49,8 @@ describe("ElectionFactory", function () {
 
   describe("Election Creation", function () {
     it("Should create a new election", async function () {
-      await factory.createElection(mockElectionInfo, 0, 0);
+      //fixed contract call
+      await factory.createElection(mock_election_info,mock_candidate_info, 0, 0);
       expect(await factory.electionCount()).to.equal(1);
       
       const openElections = await factory.getOpenElections();
@@ -43,8 +58,9 @@ describe("ElectionFactory", function () {
     });
 
     it("Should allow multiple elections creation", async function () {
-      await factory.createElection(mockElectionInfo, 0, 0);
-      await factory.createElection(mockElectionInfo, 0, 0);
+      //fixed contract calls
+      await factory.createElection(mock_election_info,mock_candidate_info, 0, 0);
+      await factory.createElection(mock_election_info,mock_candidate_info, 0, 0);
       
       expect(await factory.electionCount()).to.equal(2);
       const openElections = await factory.getOpenElections();
@@ -54,7 +70,8 @@ describe("ElectionFactory", function () {
 
   describe("Election Deletion", function () {
     beforeEach(async function () {
-      await factory.createElection(mockElectionInfo, 0, 0);
+      //fixed contract call
+      await factory.createElection(mock_election_info,mock_candidate_info, 0, 0);
     });
 
     it("Should allow owner to delete their election", async function () {
